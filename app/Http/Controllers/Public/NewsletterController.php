@@ -35,10 +35,14 @@ class NewsletterController extends Controller
             try {
                 Mail::to($subscriber->email)->send(new NewsletterWelcomeMail($subscriber));
             } catch (\Throwable $e) {
-                Log::warning('Newsletter welcome email failed', [
-                    'email' => $subscriber->email,
-                    'error' => $e->getMessage(),
-                ]);
+                try {
+                    Log::warning('Newsletter welcome email failed', [
+                        'email' => $subscriber->email,
+                        'error' => $e->getMessage(),
+                    ]);
+                } catch (\Throwable) {
+                    // logging must never break the subscribe flow
+                }
             }
         }
 

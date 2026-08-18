@@ -268,3 +268,23 @@ that search filters correctly.
 
 All PHP files lint clean (`php -l`) and Blade directive nesting is balanced;
 run `php artisan test` on a networked machine to execute the new feature tests.
+
+---
+
+## Update — newsletter emails (welcome + admin send)
+
+- **Welcome email on subscribe.** `Public\NewsletterController::store` now sends
+  `NewsletterWelcomeMail` to genuinely-new subscribers (`wasRecentlyCreated`),
+  wrapped in try/catch so a mail failure never breaks the subscribe flow.
+  Repeat subscribes don't re-send. Template: `emails/newsletter-welcome`.
+- **Admin "Send Newsletter".** New `compose`/`send` actions on the admin
+  newsletter controller, a "Send Newsletter" button on the list, and
+  `admin/newsletter/compose.blade.php`. Sends an admin-authored subject/HTML
+  body to all subscribed addresses (or a single test address), one isolated
+  send per recipient (failures logged, run continues). Mailable:
+  `NewsletterBroadcastMail` / `emails/newsletter-broadcast`.
+- **One-click unsubscribe.** Both emails carry a signed unsubscribe link
+  (`public.newsletter.unsubscribe`); unsigned requests are rejected (403).
+- Delivery is inline because `QUEUE_CONNECTION=sync`; both mails go through the
+  same SMTP account, so they only work once the mail config is valid on the
+  server. Tests: `NewsletterWelcomeTest`, `NewsletterSendTest`.

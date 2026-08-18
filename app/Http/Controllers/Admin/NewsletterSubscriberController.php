@@ -136,29 +136,56 @@ class NewsletterSubscriberController extends Controller
                 $sent++;
             } catch (\Throwable $e) {
                 $failed++;
-                \Illuminate\Support\Facades\Log::warning('Newsletter broadcast failed', [
-                    'email' => $subscriber->email,
-                    'error' => $e->getMessage(),
-                ]);
+                $this->safeLog('Newsletter broadcast failed', $subscriber->email, $e);
             }
         };
 
-        if ($data['recipients'] === 'test') {
-            $dispatch(NewsletterSubscriber::firstOrNew(['email' => strtolower(trim($data['test_email']))]));
-        } else {
-            NewsletterSubscriber::whereNull('unsubscribed_at')
-                ->chunkById(200, function ($subscribers) use ($dispatch) {
-                    foreach ($subscribers as $subscriber) {
-                        $dispatch($subscriber);
-                    }
-                });
+        try {
+            if ($data['recipients'] === 'test') {
+                $dispatch(NewsletterSubscriber::firstOrNew(['email' => strtolower(trim($data['test_email']))]));
+            } else {
+                NewsletterSubscriber::whereNull('unsubscribed_at')
+                    ->chunkById(200, function ($subscribers) use ($dispatch) {
+                        foreach ($subscribers as $subscriber) {
+                            $dispatch($subscriber);
+                        }
+                    });
+            }
+        } catch (\Throwable $e) {
+            // Any unexpected failure (DB, transport, etc.) — never 500 the admin.
+            $this->safeLog('Newsletter send aborted', 'batch', $e);
+
+            return redirect()->route('admin.newsletter.index')
+                ->with('status', 'Could not send: '.$e->getMessage());
+        }
+
+        if ($sent === 0 && $failed > 0) {
+            return redirect()->route('admin.newsletter.index')->with(
+                'status',
+                'Email could not be sent — check your mail settings (on Railway, Gmail SMTP is usually blocked; use an API mailer). See logs for details.'
+            );
         }
 
         $message = $data['recipients'] === 'test'
-            ? ($sent ? 'Test email sent.' : 'Test email failed — check your mail settings and logs.')
+            ? 'Test email sent.'
             : "Newsletter sent to {$sent} subscriber(s)".($failed ? ", {$failed} failed (see logs)." : '.');
 
         return redirect()->route('admin.newsletter.index')->with('status', $message);
+    }
+
+    /**
+     * Log without ever letting a logging failure bubble into a 500.
+     */
+    protected function safeLog(string $message, string $context, \Throwable $e): void
+    {
+        try {
+            \Illuminate\Support\Facades\Log::warning($message, [
+                'context' => $context,
+                'error' => $e->getMessage(),
+            ]);
+        } catch (\Throwable) {
+            // swallow — logging must never break the request
+        }
     }
 
     public function export(Request $request): StreamedResponse
