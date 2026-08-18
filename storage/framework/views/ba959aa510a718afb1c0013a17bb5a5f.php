@@ -3,6 +3,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="mb-0">Newsletter Subscribers</h2>
         <div class="d-flex gap-2">
+            <a href="<?php echo e(route('admin.newsletter.compose')); ?>" class="btn btn-brand-orange"><i class="bi bi-envelope-paper"></i> Send Newsletter</a>
             <a href="<?php echo e(route('admin.newsletter.export', request()->query())); ?>" class="btn btn-outline-success">
                 <i class="bi bi-download"></i> Export CSV
             </a>

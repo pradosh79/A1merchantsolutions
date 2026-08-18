@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreNewsletterSubscriberRequest;
 use App\Http\Requests\Admin\UpdateNewsletterSubscriberRequest;
+use App\Mail\NewsletterBroadcastMail;
 use App\Models\NewsletterSubscriber;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -97,6 +99,66 @@ class NewsletterSubscriberController extends Controller
         $newsletter->delete();
 
         return redirect()->route('admin.newsletter.index')->with('status', 'Subscriber deleted.');
+    }
+
+    /**
+     * Show the "send an email to subscribers" composer.
+     */
+    public function compose(): View
+    {
+        $subscribedCount = NewsletterSubscriber::whereNull('unsubscribed_at')->count();
+
+        return view('admin.newsletter.compose', compact('subscribedCount'));
+    }
+
+    /**
+     * Send an admin-authored email to every subscribed address (or a single
+     * test address). Mail is sent inline (QUEUE_CONNECTION=sync); each send is
+     * isolated so one bad address can't abort the whole run.
+     */
+    public function send(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'subject' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string'],
+            'recipients' => ['required', 'in:all,test'],
+            'test_email' => ['nullable', 'required_if:recipients,test', 'email'],
+        ]);
+
+        $sent = 0;
+        $failed = 0;
+
+        $dispatch = function (NewsletterSubscriber $subscriber) use ($data, &$sent, &$failed) {
+            try {
+                Mail::to($subscriber->email)->send(
+                    new NewsletterBroadcastMail($data['subject'], $data['body'], $subscriber)
+                );
+                $sent++;
+            } catch (\Throwable $e) {
+                $failed++;
+                \Illuminate\Support\Facades\Log::warning('Newsletter broadcast failed', [
+                    'email' => $subscriber->email,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        };
+
+        if ($data['recipients'] === 'test') {
+            $dispatch(NewsletterSubscriber::firstOrNew(['email' => strtolower(trim($data['test_email']))]));
+        } else {
+            NewsletterSubscriber::whereNull('unsubscribed_at')
+                ->chunkById(200, function ($subscribers) use ($dispatch) {
+                    foreach ($subscribers as $subscriber) {
+                        $dispatch($subscriber);
+                    }
+                });
+        }
+
+        $message = $data['recipients'] === 'test'
+            ? ($sent ? 'Test email sent.' : 'Test email failed — check your mail settings and logs.')
+            : "Newsletter sent to {$sent} subscriber(s)".($failed ? ", {$failed} failed (see logs)." : '.');
+
+        return redirect()->route('admin.newsletter.index')->with('status', $message);
     }
 
     public function export(Request $request): StreamedResponse

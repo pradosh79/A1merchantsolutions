@@ -41,7 +41,7 @@
     <div class="row g-3">
         <div class="col-lg-6">
             <div class="card h-100">
-                <div class="card-header" style="background:#f5dccb; color:#000; font-weight:700;">Top Advertisers (by claims)</div>
+                <div class="card-header">Top Advertisers (by claims)</div>
                 <ul class="list-group list-group-flush">
                     <?php $__empty_1 = true; $__currentLoopData = $widgets['top_advertisers']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $advertiser): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <li class="list-group-item d-flex justify-content-between">
@@ -56,7 +56,7 @@
         </div>
         <div class="col-lg-6">
             <div class="card h-100">
-                <div class="card-header" style="background:#f5dccb; color:#000; font-weight:700;">Offer Performance</div>
+                <div class="card-header">Offer Performance</div>
                 <div class="table-responsive">
                     <table class="table table-sm mb-0">
                         <thead>
@@ -83,7 +83,7 @@
     <div class="row g-3 mt-1">
         <div class="col-12">
             <div class="card">
-                <div class="card-header" style="background:#f5dccb; color:#000; font-weight:700;">Last 14 Days &mdash; Claims / Redemptions / QR Scans</div>
+                <div class="card-header">Last 14 Days &mdash; Claims / Redemptions / QR Scans</div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-sm text-center mb-0">

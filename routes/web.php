@@ -57,3 +57,6 @@ Route::get('/confirmation/{claim}', [ClaimController::class, 'confirmation'])->n
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])
     ->middleware('throttle:claims')
     ->name('public.newsletter.subscribe');
+
+Route::get('/newsletter/unsubscribe/{subscriber}', [NewsletterController::class, 'unsubscribe'])
+    ->name('public.newsletter.unsubscribe');

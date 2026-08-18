@@ -9,7 +9,7 @@
      its own brand-orange field, so it tiles seamlessly with .bg-brand-orange
      as a fallback while it loads / if none is set. --}}
 <section class="custom-class bg-brand-orange text-white position-relative overflow-hidden"
-         style="background-image:url('{{ asset('public/' . ltrim(parse_url($heroImageUrl, PHP_URL_PATH), '/')) }}'); background-size:cover; background-position:center right;">
+         style="background-image:url('{{ $heroImageUrl }}'); background-size:cover; background-position:center right;">
     <div class="container py-5">
         <div class="row align-center gy-4">
             <div class="col-lg-7">
@@ -62,7 +62,7 @@
         </div>
     </form>
 
-    <div class="custom-filter-btn d-flex flex-wrap justify-content-center gap-2 mb-4">
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
         <a href="{{ route('home', array_filter(['search' => $search])) }}" data-category=""
            class="btn btn-outline-secondary rounded-pill category-pill {{ ! $activeCategory ? 'active' : '' }}">
             <i class="bi bi-grid-fill me-1"></i>All
@@ -92,12 +92,12 @@
     <div class="newsletter-ribbon-left d-none d-md-block" aria-hidden="true">
         <!--<span class="ribbon-tag ribbon-tag-gold">MEGA SALE</span>-->
         <!--<span class="ribbon-tag ribbon-tag-red">UPTO 70% OFF <em>SHOP NOW</em></span>-->
-        <img src={{ asset('/public/images/mega-sale.png') }} alt="mega-sale" class="megasale">
+        <img src="/images/mega-sale.png" alt="mega-sale" class="megasale">
     </div>
 
     {{-- Right decorative "SPECIAL OFFER" folded ribbon, matching the mockup --}}
     <div class="newsletter-ribbon-right d-none d-md-block" aria-hidden="true">
-       <img src={{ asset('/public/images/special-offer.png') }} alt="special-offer" class="special-offer">
+       <img src="/images/special-offer.png" alt="special-offer" class="special-offer">
     </div>
 
     <div class="custom-newsletter container text-center position-relative">
@@ -193,13 +193,13 @@
             <!--    <path d="M4 4 C 4 60, 60 70, 128 70" stroke="#b9bec7" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 10"/>-->
             <!--    <path d="M112 58 L130 70 L114 82" stroke="#b9bec7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>-->
             <!--</svg>-->
-            <img src="/public/images/arrow-up1.png" alt="Arrow">
+            <img src="/images/arrow-up1.png" alt="Arrow">
         </div>
         <div class="custom-right col-lg-7">
             <div class="d-flex align-items-start mb-4">
                 <span class="text-brand-orange fw-bold flex-shrink-0 me-3">1.</span>
                 <span class="bg-light text-secondary rounded-circle d-inline-flex align-items-center justify-content-center flex-shrink-0 me-3" style="width:56px; height:56px;">
-                    <img src={{ asset('/public/images/search.png') }} alt="search">
+                    <img src="/images/search.png" alt="search">
                 </span>
                 <div>
                     <h5 class="mb-1">Browse Offers</h5>
@@ -209,7 +209,7 @@
             <div class="d-flex align-items-start mb-4">
                 <span class="text-brand-orange fw-bold flex-shrink-0 me-3">2.</span>
                 <span class="bg-light text-secondary rounded-circle d-inline-flex align-items-center justify-content-center flex-shrink-0 me-3" style="width:56px; height:56px;">
-                    <img src={{ asset('/public/images/qr.png') }} alt="qr">
+                    <img src="/images/qr.png" alt="qr">
                 </span>
                 <div>
                     <h5 class="mb-1">Click or Scan QR</h5>
@@ -219,7 +219,7 @@
             <div class="d-flex align-items-start">
                 <span class="text-brand-orange fw-bold flex-shrink-0 me-3">3.</span>
                 <span class="bg-light text-secondary rounded-circle d-inline-flex align-items-center justify-content-center flex-shrink-0 me-3" style="width:56px; height:56px;">
-                    <img src={{ asset('/public/images/ticket.png') }} alt="ticket">
+                    <img src="/images/ticket.png" alt="ticket">
                 </span>
                 <div>
                     <h5 class="mb-1">Redeem &amp; Save</h5>

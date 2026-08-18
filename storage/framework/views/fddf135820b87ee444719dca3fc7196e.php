@@ -156,111 +156,6 @@
             min-height: 20px !important;
             flex: 0 0 20px !important;
         }
-       @media (max-width: 1180px) {
-
-            /* Hamburger on RIGHT */
-            .navbar-expand-lg .navbar-toggler {
-                display: block;
-                margin-left: auto !important;
-                order: 2;
-                position: relative;
-                z-index: 1060;
-            }
-        
-            /* Sliding menu */
-            .navbar-expand-lg .navbar-collapse {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 320px;
-                max-width: 85%;
-                height: 100vh;
-                background: rgba(0,0,0,0.9);
-                padding: 80px 25px 30px;
-                overflow-y: auto;
-                transform: translateX(-100%);
-                transition: transform 0.35s ease-in-out;
-                display: block !important;
-                visibility: hidden;
-                z-index: 1050;
-                box-shadow: 5px 0 20px rgba(0, 0, 0, 0.15);
-            }
-        
-            /* OPEN */
-            .navbar-expand-lg .navbar-collapse.show {
-                transform: translateX(0);
-                visibility: visible;
-            }
-        
-            /* Menu items */
-            .navbar-expand-lg .navbar-nav {
-                flex-direction: column;
-                width: 100%;
-            }
-        
-            .navbar-expand-lg .navbar-nav .nav-item {
-                width: 100%;
-            }
-        
-            .navbar-expand-lg .navbar-nav .nav-link {
-                padding: 12px 0;
-                color:#fff;
-            }
-        
-            /* =========================================
-               CSS-created CLOSE BUTTON
-            ========================================= */
-        
-            .mobile-menu-close {
-                position: absolute;
-                top: 15px;
-                right: 20px;
-                width: 40px;
-                height: 40px;
-                border: 0;
-                background: transparent;
-                color: #fff;
-                font-size: 36px;
-                line-height: 40px;
-                cursor: pointer;
-                z-index: 1061;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        
-            .mobile-menu-close:hover {
-                opacity: 0.7;
-            }
-        }
-        
-        
-        /* ================================
-           Desktop - above 1180px
-        ================================ */
-        
-        @media (min-width: 1181px) {
-        
-             .navbar-expand-lg .navbar-toggler {
-                    display: none;
-                }
-            
-                .navbar-expand-lg .navbar-collapse {
-                    display: flex !important;
-                    position: static;
-                    width: auto;
-                    height: auto;
-                    padding: 0;
-                    transform: none;
-                    visibility: visible;
-                    background: transparent;
-                    box-shadow: none;
-                }
-            
-                .mobile-menu-close {
-                    display: none;
-                }
-        }
     </style>
     <!--
         PLACEHOLDER UI NOTICE
@@ -293,7 +188,6 @@
             <li class="nav-item"><a class="nav-link" href="<?php echo e(route('admin.logs.coupons')); ?>">Coupon Logs</a></li>
             <li class="nav-item"><a class="nav-link" href="<?php echo e(route('admin.logs.redemptions')); ?>">Redemption Logs</a></li>
             <li class="nav-item"><a class="nav-link" href="<?php echo e(route('admin.homepage-settings.edit')); ?>">Homepage Settings</a></li>
-            <li class="nav-item"><a class="nav-link" href="<?php echo e(route('admin.newsletter.index')); ?>">Newsletter</a></li>
         </ul>
         <?php if(auth()->guard()->check()): ?>
             <form method="POST" action="<?php echo e(route('admin.logout')); ?>" class="d-flex">
@@ -335,47 +229,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const menu = document.getElementById('adminNav');
-
-    if (!menu) {
-        return;
-    }
-
-    // Create close button
-    const closeButton = document.createElement('button');
-
-    closeButton.type = 'button';
-    closeButton.className = 'mobile-menu-close';
-    closeButton.innerHTML = '&times;';
-    closeButton.setAttribute('aria-label', 'Close menu');
-
-    // Add button inside menu
-    menu.prepend(closeButton);
-
-    // Close menu when clicking X
-    closeButton.addEventListener('click', function () {
-
-        const bsCollapse = bootstrap.Collapse.getInstance(menu);
-
-        if (bsCollapse) {
-            bsCollapse.hide();
-        } else {
-            const collapse = new bootstrap.Collapse(menu, {
-                toggle: false
-            });
-
-            collapse.hide();
-        }
-
-    });
-
-});
-</script>
-
 <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>

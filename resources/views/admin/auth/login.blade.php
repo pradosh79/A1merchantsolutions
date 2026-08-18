@@ -42,7 +42,7 @@
     <div class="overlay"></div>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-8">
+        <div class="col-md-4">
             <div class="logoclass text-center mb-3">
                 <img src="{{ asset(ltrim(config('company.logo'), '/')) }}" alt="{{ config('company.name') }}">
             </div>

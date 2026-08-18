@@ -51,6 +51,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('homepage-settings', [HomepageSettingsController::class, 'update'])->name('homepage-settings.update');
 
         Route::get('newsletter/export', [NewsletterSubscriberController::class, 'export'])->name('newsletter.export');
+        Route::get('newsletter/compose', [NewsletterSubscriberController::class, 'compose'])->name('newsletter.compose');
+        Route::post('newsletter/send', [NewsletterSubscriberController::class, 'send'])->name('newsletter.send');
         Route::patch('newsletter/{newsletter}/toggle', [NewsletterSubscriberController::class, 'toggle'])->name('newsletter.toggle');
         Route::resource('newsletter', NewsletterSubscriberController::class)->except(['show']);
     });

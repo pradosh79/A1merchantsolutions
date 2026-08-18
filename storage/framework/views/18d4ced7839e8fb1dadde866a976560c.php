@@ -299,8 +299,6 @@
 .customdiv:nth-child(even) .get-coupon{background:#fff;border:1px solid #fff;color:#f47820;}
 .customdiv:nth-child(even) .get-coupon:hover{background:rgba(255,255,255,0.6);color:#f47820;border:1px solid rgba(255,255,255,0.1);}
 .custom-right .text-brand-orange{font-size:3.1rem;line-height:1;}
-.custom-filter-btn .rounded-pill{box-shadow:4px 0px 15px rgba(0,0,0,0.2); border-radius:10px !important};
-.custom-filter-btn a.rounded-pill:nth-child(2){border:1px solid #219BB4;}
 
 /* =========================================
    MOBILE
@@ -528,10 +526,10 @@
 
         
         <a class="header-logo"
-           href="<?php echo e(route('admin.login')); ?>">
+           href="<?php echo e(route('admin.dashboard')); ?>">
 
             <img
-                src="<?php echo e(asset('public/' . ltrim(config('company.logo'), '/'))); ?>"
+                src="<?php echo e(asset(ltrim(config('company.logo'), '/'))); ?>"
                 alt="<?php echo e(config('company.name')); ?>"
             >
 
@@ -631,7 +629,7 @@
 <footer class="bg-brand-navy text-white pt-5 pb-4 mt-5 text-center position-relative" style="padding-top:0;">
     <div class="position-absolute start-50 translate-middle-x" style="top:-70px;">
         <span class="logo-badge shadow d-inline-flex align-items-center justify-content-center" style="width:150px; height:150px;">
-            <img src="<?php echo e(asset('public/' . ltrim(config('company.logo'), '/'))); ?>" alt="<?php echo e(config('company.name')); ?>" height="128">
+            <img src="<?php echo e(asset(ltrim(config('company.logo'), '/'))); ?>" alt="<?php echo e(config('company.name')); ?>" height="128">
         </span>
     </div>
 

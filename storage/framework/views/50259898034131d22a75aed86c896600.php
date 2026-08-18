@@ -23,11 +23,6 @@
                             <td class="text-end">
                                 <a href="<?php echo e(route('admin.advertisers.show', $advertiser)); ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye"></i></a>
                                 <a href="<?php echo e(route('admin.advertisers.edit', $advertiser)); ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
-                                <form action="<?php echo e(route('admin.advertisers.destroy', $advertiser)); ?>" method="POST" class="d-inline" onsubmit="return confirm('Delete “<?php echo e($advertiser->name); ?>”? This also deletes its offers and claims and cannot be undone.');">
-                                    <?php echo csrf_field(); ?>
-                                    <?php echo method_field('DELETE'); ?>
-                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                                </form>
                             </td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

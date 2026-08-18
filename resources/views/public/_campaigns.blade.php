@@ -1,7 +1,7 @@
 {{-- AJAX-swappable results region for "Browse Campaigns By Category".
      Rendered server-side on first paint and returned on its own for XHR
      requests (see HomeController::__invoke) so filtering/paging never reloads. --}}
-<p class="text-left text-muted small">
+<p class="text-center text-muted small">
     Showing {{ $offers->firstItem() ?? 0 }}-{{ $offers->lastItem() ?? 0 }} of {{ $offers->total() }} campaigns
 </p>
 
