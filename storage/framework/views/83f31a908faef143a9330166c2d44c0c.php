@@ -1,0 +1,16 @@
+<?php $__env->startSection('title', 'New Advertiser'); ?>
+<?php $__env->startSection('content'); ?>
+    <h2 class="mb-4">New Advertiser</h2>
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" action="<?php echo e(route('admin.advertisers.store')); ?>" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
+                <?php echo $__env->make('admin.advertisers._form', ['advertiser' => null], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                <button type="submit" class="btn btn-primary">Create Advertiser</button>
+                <a href="<?php echo e(route('admin.advertisers.index')); ?>" class="btn btn-outline-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH F:\xampp\htdocs\adcoupon-platform\resources\views/admin/advertisers/create.blade.php ENDPATH**/ ?>
