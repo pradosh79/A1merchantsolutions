@@ -22,3 +22,9 @@ yarn-error.log
 /.vscode
 /.zed
 database/database.sqlite
+
+# never commit database dumps or exports
+*.sql
+*.sql.gz
+*.dump
+*.sqlite
