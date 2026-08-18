@@ -250,10 +250,9 @@
     color: #ff6b00;
 }
 
-.custom-class{min-height:810px;position:relative;}
+.custom-class{min-height:810px;}
 .display-6{font-size:4.5em;}
 .align-center{margin-top:8rem;}
-.custom-form{max-width:620px;}
 .custom-form input[type="email"], .custom-newsletter input[type="email"]{background:#f8d1b4;border:1px solid #f8d1b4;}
 .custom-form button, .custom-newsletter button{font-weight:400 !important;background:#fff;color:#000;transition:all 0.5s ease-in-out;border:1px solid #fff;}
 .custom-form button:hover, .custom-newsletter button:hover{background:#000;color:#fff;border:1px solid #000;}
@@ -263,7 +262,6 @@
 .custom-form + ul.list-inline{display:flex;margin-bottom:180px;}
 .custom-gap span{display:flex;gap:8px;}
 .custom-gap span i{font-size:16px;}
-.custom-newsletter form{max-width:620px;}
 .custom-newsletter h2{font-size:3rem;}
 .custom-newsletter p{font-size:18px;}
 .custom-newsletter p.small{opacity:0.7; font-size:13px;}
@@ -278,122 +276,10 @@
 .user-btn{width:40px;height:40px;}
 .user-btn img{width:30px;height:30px;}
 .logout-btn{width:40px;height:40px;}
-.customdiv .custom-campaign h5{font-size:24px;font-weight:700;}
-.customdiv .custom-campaign h5+p.text-muted{color:#1F2937 !important;font-weight:700;}
-.customdiv{padding:10px; border-radius:15px; max-width:32%;}
-.customdiv .card{background:transparent;}
-.custom-gap{gap:10px;}
-.customdiv:nth-child(odd){background:#f8d1b4;}
-.customdiv:nth-child(even){background:#f47820;}
-.customdiv .card p.customp{font-size: 12px;padding-left:38px;text-align: left;color:rgba(0,0,0,0.4);margin-bottom:0;}
-.customdiv .col-6 .small.text-muted{color:#219BB4 !important;}
-.customdiv .custom-text-muted{font-size:14px; color:rgba(0,0,0,0.4);}
-.right-border{border-right:1px solid rgba(0,0,0,0.1);}
-.get-coupon, .check-offer{height:60px;display:flex;align-items:center;text-align:center;font-size:19px;padding:0px;max-width:50%;border-radius:10px;box-shadow:4px 0 10px rgba(0,0,0,0.2);}
-.check-offer{background:#fff;border:1px solid #fff;display:flex;justify-content:center;gap:5px;}
-.check-offer:hover{background:rgba(255,255,255,0.5);color:#f47820;}
-.get-coupon img{padding:4px 8px 4px 4px;display:flex;justify-content: flex-start;}
-.customdiv:nth-child(even) h5{color:#fff;}
-.customdiv:nth-child(even) .custom-campaign h5+p.text-muted{color:#fff !important;}
-.customdiv:nth-child(even) .custom-campaign .text-secondary{color:rgba(255,255,255,0.6) !important; text-transform:capitalize;}
-.customdiv:nth-child(even) .get-coupon{background:#fff;border:1px solid #fff;color:#f47820;}
-.customdiv:nth-child(even) .get-coupon:hover{background:rgba(255,255,255,0.6);color:#f47820;border:1px solid rgba(255,255,255,0.1);}
-.custom-right .text-brand-orange{font-size:3.1rem;line-height:1;}
 
 /* =========================================
    MOBILE
 ========================================= */
-@media (max-width:1360px){
-    .get-coupon, .check-offer{font-size:15px;}
-}
-@media (max-width:1280px){
-    .display-6{font-size:3.5rem;}
-    .lead{font-size:1.20rem;}
-    .custom-form{max-width:530px;}
-    .special-offer{width:404px !important;top:-8px !important;}
-}
-
-@media (max-width:1180px){
-    .header-logo img{width: 138px;height:138px;}
-    .header-contact, .category-link{font-size:16px};
-    .lead{font-size:1.00rem;}
-    .display-6{font-size:2.5rem;}
-    .custom-form{max-width:434px;}
-    .custom-form button, .custom-newsletter button{font-size:16px;}
-    .custom-form .form-control-lg{font-size:1.00rem;}
-    .custom-form + .me-4{margin-right:1 rem;}
-    .customdiv .custom-campaign h5{font-size:20px;}
-    .customdiv .custom-campaign h5+p.text-muted{font-size:16px;}
-    .customdiv .card p.customp{font-size:11px;padding-left:22px;}
-    .customdiv .col-6 .small.text-muted, .customdiv .custom-text-muted{font-size:12px;}
-    .custom-campaign .d-flex.gap-2.mt-4{gap: 19px !important;flex-wrap: wrap;}
-    .get-coupon, .check-offer{height:48px;max-width: 57%;justify-content: center;margin:auto;}
-    .get-coupon img{width:30%;}
-    .custom-design .custom-col{padding-left:45px;padding-right:45px;}
-    .custom-class{min-height:720px;}
-}
-
-@media (max-width:1024px){
-    .custom-form + ul.list-inline{margin-bottom:113px;}
-    .custom-class{min-height:689px;}
-    .check-offer img{max-width:17%;}
-    .custom-gap + p{font-size:14px;}
-    .custom-newsletter form{max-width:545px;}
-    .custom-newsletter input[type="email"]{font-size:1rem;}
-    .custom-newsletter h2{font-size:2rem;}
-    .custom-newsletter p{font-size:17px;}
-    footer .fs-3{font-size:calc(1rem + .6vw)!important;}
-    .header-logo img{width:129px;height:129px;}
-    .header-divider{display:none;}
-    .header-left{flex-direction:column;align-items:flex-start;gap:0;}
-    .custom-design .custom-col img{margin-left:157px;margin-top:-15px;}
-}
-
-@media (max-width:992px){
-    .lead{font-size:0.80rem;}
-    .custom-form + ul.list-inline{margin-bottom:91px;}
-    .custom-class{min-height:651px;}
-    .special-offer{width:313px !important; top:-3px !important;}
-    .newsletter-banner .megasale{width:63% !important;}
-}
-
-@media (max-width:991px){
-   .newsletter-banner .megasale{width:62% !important;} 
-   .custom-design .custom-col img{display:none;}
-    .lead{font-size:0.70rem;}
-    .custom-form{max-width:407px;}
-    .custom-list-item.me-4{margin-right:1rem !important;font-size:14px;}
-    .customdiv{max-width:49%;}
-}
-
-@media (max-width:932px){
-    .newsletter-banner .megasale{width:55% !important;}  
-    .newsletter-banner{height:375px !important;}
-}
-
-@media (max-width:915px){
-    .custom-newsletter form{max-width:500px;}
-}
-
-@media (max-width:896px){
-   .display-6{font-size: 2rem;}
-   .custom-form .form-control-lg{font-size:0.80rem;}
-   .custom-form{width:358px;}
-   .custom-form button, .custom-newsletter button{font-size:14px;}
-   .custom-class{min-height:590px;}
-   .custom-newsletter form{max-width:475px;}
-}
-
-@media (max-width:844px){
-    .custom-list-item.me-4, .custom-list-item{font-size:13px;}
-    .newsletter-banner .megasale{width:49% !important;}
-    .newsletter-banner{height:340px !important;}
-}
-
-@media (max-width:820px){
-   .newsletter-banner{height:330px !important;} 
-   .newsletter-banner .megasale{width:46% !important;}
-}
 
 @media (max-width: 768px) {
 
@@ -402,7 +288,11 @@
     }
 
     .header-left {
-        gap: 0;
+        gap: 18px;
+    }
+
+    .header-contact span {
+        display: none;
     }
 
     .header-divider {
@@ -410,13 +300,13 @@
     }
 
     .header-logo {
-        width: 100px;
-        height: 100px;
+        width: 70px;
+        height: 70px;
     }
 
     .header-logo img {
-        width: 100px;
-        height: 100px;
+        width: 60px;
+        height: 60px;
     }
 
     .category-link {
@@ -426,29 +316,6 @@
     .admin-navigation {
         right: 20px;
     }
-}
-
-@media (max-width:767px){
-    .get-coupon, .check-offer{max-width:100%;}
-    .get-coupon img{width:24%;}
-}
-
-
-@media (max-width:667px){
-    .custom-col h2{font-size:calc(1.0rem + .9vw);}
-    .custom-right .text-brand-orange{font-size:2.1rem;line-height:1.5;}
-}
-
-@media (max-width:580px){
-    .custom-class::after{position:absolute; left:0; right:0; top:0; bottom:0; width:100%; content:''; background:rgba(0,0,0,0.4);}
-    .custom-class .col-lg-7{z-index:9;}
-    .header-contact i{font-size:15px;}
-    .header-contact{font-size:12px;}
-    .text-muted{font-size:16px;}
-}
-
-@media (max-width:540px){
-    .newsletter-banner{height:278px !important;}
 }
 
 
@@ -476,25 +343,7 @@
         width: 28px;
         height: 28px;
     }
-    
-    .customdiv{max-width:94%; margin-left:auto; margin-right:auto;}
-    .custom-newsletter p{font-size:15px;}
-    .custom-design .custom-col{text-align: center;padding-left:30px;padding-right:30px;}
 
-}
-
-@media (max-width:440px){
-    .custom-col h2{font-size:calc(0.90rem + .9vw);}
-    .custom-right .text-brand-orange{font-size:2rem;}
-    .lead{font-size:0.9rem;}
-    .input-group-lg>.form-control{font-size:1rem;}
-}
-
-@media (max-width:390px){
-    .custom-newsletter p{font-size:14px;}
-    .custom-right .text-muted{font-size:14px;}
-    .custom-right h5{font-size:1.1rem;}
-    .custom-list-item.me-4{margin-right:0.5rem !important;}
 }
 
     </style>

@@ -13,7 +13,7 @@
                 <p class="lead opacity-90">Explore exclusive discounts, limited-time offers, and<br/>
                 exciting deals &mdash; all in one place. Browse by category and start saving today.</p>
 
-                <form method="POST" action="<?php echo e(route('public.newsletter.subscribe')); ?>" class="custom-form d-flex gap-2 my-4">
+                <form method="POST" action="<?php echo e(route('public.newsletter.subscribe')); ?>" class="custom-form d-flex gap-2 my-4" style="max-width:620px;">
                     <?php echo csrf_field(); ?>
                     <input type="hidden" name="source" value="homepage_hero">
                     <input type="email" name="email" class="form-control form-control-lg" placeholder="Enter your E-mail Address" required>
@@ -47,7 +47,7 @@
         <p class="text-muted">Discover exclusive deals and limited-time offers from your favorite brands. Browse by category and save more.</p>
     </div>
 
-    <form method="GET" action="<?php echo e(route('home')); ?>" class="mx-auto mb-4" style="max-width:640px;" data-campaign-search>
+    <form method="GET" action="<?php echo e(route('home')); ?>" class="mx-auto mb-4" style="max-width:640px;">
         <?php if($activeCategory): ?>
             <input type="hidden" name="category" value="<?php echo e($activeCategory); ?>">
         <?php endif; ?>
@@ -58,15 +58,15 @@
     </form>
 
     <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
-        <a href="<?php echo e(route('home', array_filter(['search' => $search]))); ?>" data-category=""
+        <a href="<?php echo e(route('home', array_filter(['search' => $search]))); ?>"
            class="btn btn-outline-secondary rounded-pill category-pill <?php echo e(! $activeCategory ? 'active' : ''); ?>">
             <i class="bi bi-grid-fill me-1"></i>All
         </a>
         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <a href="<?php echo e(route('home', array_filter(['category' => $cat['value'], 'search' => $search]))); ?>" data-category="<?php echo e($cat['value']); ?>"
+            <a href="<?php echo e(route('home', array_filter(['category' => $cat['value'], 'search' => $search]))); ?>"
                class="btn btn-outline-secondary rounded-pill category-pill <?php echo e($activeCategory === $cat['value'] ? 'active' : ''); ?>">
                 <?php if($cat['icon_url']): ?>
-                    <img src="<?php echo e($cat['icon_url']); ?>" alt="" width="20" height="20" class="me-1" style="object-fit:contain;">
+                    <img src="<?php echo e($cat['icon_url']); ?>" alt="" width="16" height="16" class="me-1" style="object-fit:contain;">
                 <?php else: ?>
                     <i class="bi <?php echo e($cat['icon']); ?> me-1"></i>
                 <?php endif; ?>
@@ -76,9 +76,76 @@
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
 
-    <div id="campaign-results">
-        <?php echo $__env->make('public._campaigns', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <p class="text-center text-muted small">
+        Showing <?php echo e($offers->firstItem() ?? 0); ?>-<?php echo e($offers->lastItem() ?? 0); ?> of <?php echo e($offers->total()); ?> campaigns
+    </p>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        <?php $__empty_1 = true; $__currentLoopData = $offers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $offer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="position-relative">
+                        <img src="<?php echo e($offer->imageUrl() ?? 'https://placehold.co/400x220/f96a09/ffffff?text='.urlencode($offer->title)); ?>"
+                             class="card-img-top" style="height:180px; object-fit:cover;" alt="<?php echo e($offer->title); ?>">
+                        <?php if($offer->category): ?>
+                            <span class="badge bg-dark position-absolute top-0 start-0 m-2"><?php echo e($offer->categoryLabel()); ?></span>
+                        <?php endif; ?>
+                        <?php if($offer->advertiser?->logoUrl()): ?>
+                            <img src="<?php echo e($offer->advertiser->logoUrl()); ?>" alt="<?php echo e($offer->advertiser->name); ?>"
+                                 class="position-absolute top-0 end-0 m-2 bg-white rounded-circle p-1" style="width:36px; height:36px; object-fit:contain;">
+                        <?php endif; ?>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title mb-1"><?php echo e($offer->title); ?></h5>
+                        <p class="text-muted small mb-2">by <?php echo e($offer->advertiser->name ?? 'Partner Brand'); ?></p>
+                        <p class="card-text small text-secondary flex-grow-1"><?php echo e(\Illuminate\Support\Str::limit($offer->description, 90)); ?></p>
+
+                        <div class="row g-2 my-2 text-center">
+                            <div class="col-6">
+                                <div class="border rounded p-2 h-100">
+                                    <img src="<?php echo e(route('public.offer.qr', $offer)); ?>" alt="Scan to claim" width="64" height="64">
+                                    <div class="small text-muted mt-1"><i class="bi bi-qr-code-scan"></i> Scan &amp; Claim</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="border rounded p-2 h-100 d-flex flex-column justify-content-center">
+                                    <div class="small text-muted">Offered by</div>
+                                    <div class="fw-semibold small text-truncate"><?php echo e($offer->advertiser->name ?? '—'); ?></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php if($offer->ends_at): ?>
+                            <p class="small text-muted mb-3"><i class="bi bi-clock"></i> Valid till <?php echo e($offer->ends_at->format('jS M Y')); ?></p>
+                        <?php endif; ?>
+
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="<?php echo e(route('public.offer', $offer)); ?>" class="btn btn-brand-orange btn-sm flex-fill">
+                                <i class="bi bi-ticket-perforated me-1"></i>Get Coupon
+                            </a>
+                            <a href="<?php echo e(route('public.offer', $offer)); ?>" class="btn btn-outline-brand-orange btn-sm flex-fill">
+                                Check Offer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+            <div class="col-12">
+                <div class="alert alert-secondary text-center">
+                    No active campaigns<?php echo e($activeCategory ? ' in this category' : ''); ?> right now &mdash; check back soon!
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
+
+    <p class="text-center text-muted mt-4">Explore more deals, discover bigger savings, and never miss an exclusive offer. New promotions are added regularly.</p>
+
+    <?php if($offers->hasMorePages()): ?>
+        <div class="text-center">
+            <a href="<?php echo e($offers->nextPageUrl()); ?>" class="btn btn-brand-orange px-4">Load More <i class="bi bi-arrow-repeat"></i></a>
+        </div>
+    <?php endif; ?>
 </section>
 
 
@@ -99,7 +166,7 @@
     <div class="custom-newsletter container text-center position-relative">
         <h2 class="fw-bold text-white">Subscribe Newsletter</h2>
         <p class="opacity-70 mb-4">Join our newsletter for exclusive offers, fresh deals, and<br/> limited-time discounts delivered to your inbox.</p>
-        <form method="POST" action="<?php echo e(route('public.newsletter.subscribe')); ?>" class="d-flex gap-2 mx-auto" >
+        <form method="POST" action="<?php echo e(route('public.newsletter.subscribe')); ?>" class="d-flex gap-2 mx-auto" style="max-width:620px;">
             <?php echo csrf_field(); ?>
             <input type="hidden" name="source" value="homepage_footer_banner">
             <div class="input-group input-group-lg">
@@ -119,7 +186,6 @@
     .newsletter-banner{height:431px;display:flex;align-items:center;position:relative;}
     .newsletter-banner .megasale{width:66%;transform: rotate(11deg);padding-left: 21px;}
     .special-offer{width:480px;position:absolute;right:0;top:-12px;}
-    .rounded-pill{display:flex;gap:3px;}
     .newsletter-ribbon-left {
         position: absolute;
         left: -40px;
@@ -193,7 +259,7 @@
         </div>
         <div class="custom-right col-lg-7">
             <div class="d-flex align-items-start mb-4">
-                <span class="text-brand-orange fw-bold flex-shrink-0 me-3">1.</span>
+                <span class="text-brand-orange fw-bold flex-shrink-0 me-3" style="font-size:3.1rem; line-height:1;">1.</span>
                 <span class="bg-light text-secondary rounded-circle d-inline-flex align-items-center justify-content-center flex-shrink-0 me-3" style="width:56px; height:56px;">
                     <img src="/images/search.png" alt="search">
                 </span>
@@ -203,7 +269,7 @@
                 </div>
             </div>
             <div class="d-flex align-items-start mb-4">
-                <span class="text-brand-orange fw-bold flex-shrink-0 me-3">2.</span>
+                <span class="text-brand-orange fw-bold flex-shrink-0 me-3" style="font-size:3.1rem; line-height:1;">2.</span>
                 <span class="bg-light text-secondary rounded-circle d-inline-flex align-items-center justify-content-center flex-shrink-0 me-3" style="width:56px; height:56px;">
                     <img src="/images/qr.png" alt="qr">
                 </span>
@@ -213,7 +279,7 @@
                 </div>
             </div>
             <div class="d-flex align-items-start">
-                <span class="text-brand-orange fw-bold flex-shrink-0 me-3">3.</span>
+                <span class="text-brand-orange fw-bold flex-shrink-0 me-3" style="font-size:3.1rem; line-height:1;">3.</span>
                 <span class="bg-light text-secondary rounded-circle d-inline-flex align-items-center justify-content-center flex-shrink-0 me-3" style="width:56px; height:56px;">
                     <img src="/images/ticket.png" alt="ticket">
                 </span>
@@ -227,112 +293,5 @@
 </section>
 
 <?php $__env->stopSection(); ?>
-
-<?php $__env->startPush('scripts'); ?>
-<script>
-(function () {
-    var form = document.querySelector('[data-campaign-search]');
-    var results = document.getElementById('campaign-results');
-    if (!results) return;
-
-    var pillWrap = document.querySelector('.category-pill') ? document.querySelector('.category-pill').parentElement : null;
-    var searchInput = form ? form.querySelector('input[name="search"]') : null;
-    var baseUrl = form ? form.getAttribute('action') : window.location.pathname;
-
-    var state = {
-        category: <?php echo json_encode($activeCategory, 15, 512) ?> || '',
-        search: <?php echo json_encode($search, 15, 512) ?> || ''
-    };
-    var debounceTimer = null;
-    var lastController = null;
-
-    function buildUrl(overrideUrl) {
-        if (overrideUrl) return overrideUrl;
-        var params = new URLSearchParams();
-        if (state.category) params.set('category', state.category);
-        if (state.search) params.set('search', state.search);
-        var qs = params.toString();
-        return baseUrl + (qs ? ('?' + qs) : '');
-    }
-
-    function setActivePill() {
-        document.querySelectorAll('.category-pill').forEach(function (pill) {
-            var cat = pill.getAttribute('data-category') || '';
-            pill.classList.toggle('active', cat === state.category);
-        });
-    }
-
-    function fetchResults(url, push) {
-        var target = buildUrl(url);
-        if (lastController) lastController.abort();
-        lastController = new AbortController();
-
-        results.style.opacity = '0.5';
-        fetch(target, {
-            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'text/html' },
-            signal: lastController.signal
-        })
-            .then(function (r) { return r.text(); })
-            .then(function (html) {
-                results.innerHTML = html;
-                results.style.opacity = '';
-                if (push !== false) window.history.pushState({ campaign: true }, '', target);
-            })
-            .catch(function (err) {
-                if (err.name !== 'AbortError') { results.style.opacity = ''; }
-            });
-    }
-
-    // Search: submit + live (debounced) — never reloads.
-    if (form) {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            state.search = searchInput ? searchInput.value.trim() : '';
-            fetchResults();
-        });
-    }
-    if (searchInput) {
-        searchInput.addEventListener('input', function () {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(function () {
-                state.search = searchInput.value.trim();
-                fetchResults();
-            }, 350);
-        });
-    }
-
-    // Category pills.
-    document.querySelectorAll('.category-pill').forEach(function (pill) {
-        pill.addEventListener('click', function (e) {
-            e.preventDefault();
-            state.category = pill.getAttribute('data-category') || '';
-            setActivePill();
-            fetchResults();
-        });
-    });
-
-    // "Load More" / pagination links rendered inside the results region.
-    results.addEventListener('click', function (e) {
-        var link = e.target.closest('a[href]');
-        if (!link || !results.contains(link)) return;
-        // Only intercept in-app campaign links (pagination / load more).
-        if (link.hasAttribute('data-page-link') || link.href.indexOf(baseUrl) === 0) {
-            e.preventDefault();
-            fetchResults(link.getAttribute('href'));
-        }
-    });
-
-    // Back/forward buttons.
-    window.addEventListener('popstate', function () {
-        var params = new URLSearchParams(window.location.search);
-        state.category = params.get('category') || '';
-        state.search = params.get('search') || '';
-        if (searchInput) searchInput.value = state.search;
-        setActivePill();
-        fetchResults(window.location.href, false);
-    });
-})();
-</script>
-<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('layouts.public', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH F:\xampp\htdocs\adcoupon-platform\resources\views/public/home.blade.php ENDPATH**/ ?>

@@ -316,11 +316,13 @@
     });
 
     // "Load More" / pagination links rendered inside the results region.
+    // Only these are intercepted — offer links (Get Coupon / Check Offer) must
+    // navigate normally to the offer page.
     results.addEventListener('click', function (e) {
         var link = e.target.closest('a[href]');
         if (!link || !results.contains(link)) return;
-        // Only intercept in-app campaign links (pagination / load more).
-        if (link.hasAttribute('data-page-link') || link.href.indexOf(baseUrl) === 0) {
+        var isPagination = link.hasAttribute('data-page-link') || /[?&]page=\d+/.test(link.getAttribute('href') || '');
+        if (isPagination) {
             e.preventDefault();
             fetchResults(link.getAttribute('href'));
         }
