@@ -19,6 +19,28 @@ return [
             'transport' => 'log',
             'channel' => env('MAIL_LOG_CHANNEL'),
         ],
+
+        // --- HTTP API transports (recommended on hosts that block SMTP, e.g. Railway) ---
+        // Each needs its composer package installed; see README / .env notes.
+        'resend' => [
+            'transport' => 'resend',
+        ],
+        'postmark' => [
+            'transport' => 'postmark',
+            // 'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),
+        ],
+        'ses' => [
+            'transport' => 'ses',
+        ],
+        'mailgun' => [
+            'transport' => 'mailgun',
+            // 'client' => ['timeout' => 5],
+        ],
+        'sendmail' => [
+            'transport' => 'sendmail',
+            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+        ],
+
         'array' => ['transport' => 'array'],
         'failover' => ['transport' => 'failover', 'mailers' => ['smtp', 'log']],
     ],
